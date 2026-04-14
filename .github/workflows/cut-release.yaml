@@ -1,0 +1,34 @@
+name: 🏭 Cut Mod Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Semver Bump Type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+
+jobs:
+  cut_release:
+    name: "Cut Release"
+    uses: open-goal/mod-bundling-tools/.github/workflows/mod-bundler.yml@v1
+    with:
+      semverBump: ${{ inputs.bump }}
+      metadataName: "Mod Bundle"
+      metadataDescription: "mods. 2"
+      metadataSupportedGames: "jak2"
+      metadataAuthors: "barg,vaser"
+      metadataTags: "rng,gameplay-mod"
+      metadataWebsiteUrl: "https://github.com/FUNKI-DELIRE-LEON-GAGIN/Dragon-Jak-Z-Mods"
+      toolingRepo: "OpenGOAL-Mods/OG-Mod-Base"
+      gameAssetsDir: "game/assets"
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
